@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thanh toán</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center text-info">THANH TOÁN ĐƠN THUỐC</h1>
+        <div class="alert alert-warning">
+            <h3>Số lượng SP: {{ cart_info.total_soLuong }}</h3>
+            <h3>Tổng tiền: {{ cart_info.total_amount }} VNĐ</h3>
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>mã thuốc</th>
+                <th>Tên thuốc</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+            </tr>
+            {% if 'cart' in session %}
+            {% for p in session['cart'].values() %}
+            <tr>
+                <td>{{ p.maThuoc }}</td>
+                <td>{{ p.tenThuoc }}</td>
+                <td>{{ p.price }}</td>
+                <td>
+                    <div class="form-group">
+                        <input type="number"
+                               value="{{ p.soLuong }}"
+                               class="form-control" />
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="4">Không có sản phẩm nào!</td>
+            </tr>
+            {% endif %}
+        </table>
+        <input  type="button"
+                onclick="pay()"
+                value="Thanh toán"
+                class="btn btn-success" />
+    </div>
+</body>
+</html>
